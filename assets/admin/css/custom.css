@@ -6450,12 +6450,123 @@ ul.notifications {
     padding: 20px;
 }
 .img-show{
-    height: 50px;
     float: left;
     margin-right: 10px;
     border:2px solid #5BC0DE;
     margin-bottom: 20px;
+    position: relative;
 }
+.img-show img{
+    height: 50px;
+}
+.img-show span{
+    position: absolute;
+    right: -10px;
+    top: -11px;
+    background: rgba(91, 192, 222, 0.88);
+    border-radius: 50%;
+    padding: 0px 4px;
+}
+.img-show span:hover{
+    background: rgb(27, 157, 195);
+}
+.img-show span a{color: #fff;}
 #image-show{
 
+}
+.loading-img{
+    width: 121%;
+    height: 66px;
+    background-image: url("../images/loading.gif") !important;
+    background-repeat: no-repeat;
+    display: none;
+    background-size: 56%;
+    position: absolute;
+    background-position: center;
+    background-color: rgba(42, 63, 84, 0.38);
+    top: -11px;
+    left: -4px;
+    border-radius: 3px;
+}
+.dataTables_paginates a , .dataTables_paginates span {
+    padding: 5px 11px;
+    background: rgba(42, 63, 84, 0.57);
+    margin: 2px;
+    border-radius: 3px;
+    color: #fff;
+    text-decoration: none;
+}
+.dataTables_paginates a:hover{
+    background: rgba(42, 63, 84, 1);
+}
+.dataTables_paginates span{
+    background: #2A3F54;
+}
+.cke_skin_kama .cke_rcombo a, .cke_skin_kama .cke_rcombo a:active, .cke_skin_kama .cke_rcombo a:hover{
+    height: 26px !important;
+}
+.cke_skin_kama .cke_toolgroup{
+    padding-bottom: 5px !important;
+}
+.tree-menu-slide ul {
+    list-style: none;
+    padding: 0px;
+    margin: 10px 0px;
+}
+.tree-menu-slide ul li {
+    margin: 11px 0px;
+    background: rgb(247, 247, 247);
+    border: 1px solid #ddd;
+    padding: 4px 4px;
+    position: relative;
+}
+.tree-menu-slide ul li img{
+    margin-right: 20px;
+}
+.tree-menu-slide ul li .action{
+    top: -10px;
+    right: -8px;
+    padding: 0px 4px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 35px;
+    display: none;
+}
+.tree-menu-slide ul li .img{
+    position: relative;
+}
+.tree-menu-slide ul li .img a{
+    display: none;
+    position: absolute;
+    left: 30%;
+    top: -3px;
+    background: rgba(0, 0, 0, 0.63);
+    color: #fff;
+    padding: 2px 5px;
+    opacity: 1;
+    border-radius: 17px;
+    z-index: 11;
+}
+.hover-img{
+    opacity: 0.6;
+}
+span.number {
+    padding: 3px 6px;
+    background: #2A3F54;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 11px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+.input-edit{
+    width: 50%;
+    display: initial;
+    margin-right: 9px;
+}
+a.edit{
+    margin-left: 10px;
+    display: none;
+}
+.tree-menu-slide {
+    min-height: 200px;
 }

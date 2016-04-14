@@ -33,9 +33,18 @@
         </div>
     </div>
 </div>
+<div id="change-content" data-backdrop="static" data-keyboard="false" class="modal fade " tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <?php  $this->load->view("admin/category/ajax_load_content"); ?>
+        </div>
+    </div>
+</div>
+
 
 <script>
     $(function(){
+        CKEDITOR.replace( "description");
         load_tree();
         $("#add-category").click(function(){
             edit_category(0);
@@ -72,56 +81,69 @@
         });
     }
     function edit_category(id){
+        if (id == 0){
+            $(".title-cg").html("Thêm danh mục");
+            $("#save_edit_category").html("Thêm mới");
+        } else {
+            $(".title-cg").html("Cập nhật danh mục");
+            $("#save_edit_category").html("Cập nhật");
+        }
         var element = $("#change-content");
-        element.find(".modal-content").html("<div class='loading-content'>Đang tải dữ liệu, vui lòng đợi....</div>");
+      //  element.find(".modal-content").html("<div class='loading-content'>Đang tải dữ liệu, vui lòng đợi....</div>");
         element.modal('show');
         $.ajax({
             type: "POST",
             url:"<?php echo base_url(); ?>admin/category/edit/" + id,
             data: {'id': id },
+            dataType: 'json',
             error: function(data){
                 //alert('error test');
             },
             success: function(data){
-                element.find(".modal-content").html(data);
-                CKEDITOR.replace( "description");
-
-                $("#save_edit_category").click(function(){
-                    set_disable_form_element(element);
-                    var content = CKEDITOR.instances['description'].getData();
-                    var parent_id = $(".update-category select[name='parent_id']").val();
-                    var title = $(".update-category input[name='title']").val();
-                    if(title == ''){
-                        $(".update-category input[name='title']").css('border', '1px solid red');
-                        return false;
-                    }
-                    $.ajax({
-                        type: "POST",
-                        url:"<?php echo base_url(); ?>admin/category/update_category",
-                        data: {'id': id, 'description': content, 'title': title, 'parent_id': parent_id },
-                        dataType: 'json',
-                        error: function(data){
-                            //alert('error test');
-                        },
-                        success: function(data){
-                            set_enable_form_element(element);
-                            element.modal('hide');
-                            $("#sortable div").html(data['tree']);
-                            load_tree();
-                            new PNotify({
-                                title: 'Thông báo thành công',
-                                text: data['success'],
-                                type: 'success'
-                            });
-                        }
-                    });
-
-                });
+                //element.find(".modal-content").html(data);
+                $(".update-category input[name='id']").val(id)
+                $(".update-category input[name='title']").val(data['category'].title);
+                CKEDITOR.instances['description'].setData(data['category'].description);
+                $(".update-category select[name='parent_id']").html('<option value="">--Chọn danh mục--</option>' + data['tree']);
 
             }
         });
 
     }
+
+    $("#save_edit_category").click(function(){
+        var element = $("#change-content");
+        var content = CKEDITOR.instances['description'].getData();
+        var parent_id = $(".update-category select[name='parent_id']").val();
+        var title = $(".update-category input[name='title']").val();
+        var id = $(".update-category input[name='id']").val();
+        if(title == ''){
+            $(".update-category input[name='title']").css('border', '1px solid red');
+            return false;
+        }
+        set_disable_form_element(element);
+        $.ajax({
+            type: "POST",
+            url:"<?php echo base_url(); ?>admin/category/update_category",
+            data: {'id': id, 'description': content, 'title': title, 'parent_id': parent_id },
+            dataType: 'json',
+            error: function(data){
+                //alert('error test');
+            },
+            success: function(data){
+                set_enable_form_element(element);
+                element.modal('hide');
+                $("#sortable div").html(data['tree']);
+                load_tree();
+                new PNotify({
+                    title: 'Thông báo thành công',
+                    text: data['success'],
+                    type: 'success'
+                });
+            }
+        });
+
+    });
 
 
     function delete_category(id){

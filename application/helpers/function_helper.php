@@ -23,6 +23,35 @@ function get_image($path){
 	return base_url(). 'assets/images/no_image.jpg';
 }
 
+function get_image_product($product_id, $size){
+	$CI =& get_instance();
+	$CI->load->model('admin/image_model');
+	$result = $CI->image_model->get_image($product_id);
+	$path = '';
+	if (!empty($result)){
+		$path = 'uploads/images/sanpham/' . $size . '/'. $result[0]->image_path;
+	}
+	if (file_exists($path)){
+		return base_url().$path;
+	}
+	return base_url(). 'assets/images/no_image.jpg';
+}
+
+function get_image_slide($id, $size){
+	$CI =& get_instance();
+	$CI->load->model('admin/slide_model');
+	$result = $CI->slide_model->get_slide_by_id($id);
+	$path = '';
+	if (!empty($result)){
+		$path = 'uploads/images/slide/' . $size . '/'. $result->path_image;
+	}
+	if (file_exists($path)){
+		return base_url().$path;
+	}
+	return base_url(). 'assets/images/no_image.jpg';
+}
+
+
 function covert_url($inputString, $id = '')
 {
 	$trans = array (

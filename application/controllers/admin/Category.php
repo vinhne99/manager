@@ -53,7 +53,8 @@ class Category extends CI_Controller {
 		else
 			$this->dequyselect(0, 0, $id);
 		$data['tree'] = $this->tree_select;
-		$this->load->view('admin/category/ajax_load_content', $data);
+
+		echo json_encode($data);
 	}
 	public function update_category(){
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {

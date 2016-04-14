@@ -5,6 +5,7 @@ class Product extends CI_Controller {
 	private $tree_select = '';
 	private $serent = 0;
 	private  $current_date = '';
+	private $type = "PRODUCT";
 	function __construct()
 	{
 		parent::__construct();
@@ -20,12 +21,56 @@ class Product extends CI_Controller {
 		$this->load->view('admin/layout' , $data);
 	}
 
+	public function ajax_product(){
+		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+			$this->load->library("page_ajax");
+			$total_row = $this->post_model->get_post_type($this->type);
+			$page = $this->input->post('page');
+			$limit = 20;
+			$total = (int)round( $total_row / $limit);
+			if ($page >= $total){
+				$page = $total;
+			}
+			$this->session->set_userdata("page", $page);
+
+			$start = $page*$limit;
+
+			$config['page_total'] = $total;
+			$config['page_current'] = $page;
+			$config['function'] = "load_product";
+			$data['pagination'] = $this->page_ajax->initialize($config);
+			$data['products'] = $this->post_model->get_post_type($this->type, $limit, $start);
+			$this->load->view('admin/product/ajax_list' , $data);
+		}
+	}
+
 	public function create()
 	{
 		$this->dequyselect(0, 0, 0);
 		$data['tree'] = $this->tree_select;
 		$data['page'] = "admin/product/create";
 		$this->load->view('admin/layout' , $data);
+	}
+	public function edit($id)
+	{
+		$product = $this->post_model->get_post_by_id($id);
+		$this->dequyselect(0, $product->category_id, $id);
+		$data['product'] = $product;
+		$data['option'] =  $this->post_model->get_option_by_id($id);
+		$data['image'] =  $this->image_model->get_image($id);
+
+		$data['tree'] = $this->tree_select;
+		$data['page'] = "admin/product/edit";
+		$this->load->view('admin/layout' , $data);
+	}
+
+	public function delete(){
+		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+			$id = $this->input->post('id');
+			$product = $this->post_model->get_post_by_id($id);
+			$this->post_model->delete($id);
+			echo json_encode(array('status' => 1, 'success' => 'Xóa sản phẩm ' . $product->title . ' thành công!'));
+		}
 	}
 
 	public function update_product(){
@@ -43,7 +88,7 @@ class Product extends CI_Controller {
 			if ($id == 0){
 				$plug_url = covert_url($title, '');
 				$p_id = $this->post_model->insert(array('title' => $title, 'description' => $description, 'category_id' => $parent_id, 'type' => 'PRODUCT' , 'plug_url' => $plug_url, 'date_create' => $this->current_date));
-				$this->post_model->insert_option(array('product_id' => $p_id, 'price' => $price , 'price_seo' => $price_seo));
+				$this->post_model->insert_option(array('parent_id' => $p_id, 'price' => $price , 'price_seo' => $price_seo));
 				if (!empty($arr_image)){
 					foreach($arr_image as $row){
 						if ($row != '') {

@@ -16,6 +16,16 @@ class Image_model extends CI_Model {
         return array();
     }
 
+    public function get_image_by_id($id){
+        $this->db->select('*');
+        $this->db->where('id', $id);
+        $this->db->from('image');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0)
+            return $query->row();
+        return array();
+    }
+
 	public function insert($data){
 		$this->db->insert('image',$data);
 		return $this->db->insert_id();
@@ -29,6 +39,10 @@ class Image_model extends CI_Model {
         $this->db->delete('image',$data);
     }
 
+    public function delete_by_id($id){
+        $this->db->where('id',$id);
+        $this->db->delete('image');
+    }
 }
 
 ?>

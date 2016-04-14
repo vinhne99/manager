@@ -520,7 +520,20 @@ $initDate = new DateTime();
 $initDate->add(new DateInterval("PT5H"));
 $config['current_datetime'] =$initDate->format("Y-m-d H:i:s");
 $config['size_img_product'] = array(
+    array(50, 50),
     array(100, 100),
     array(200, 200),
     array(600, 600, 'full')
 );
+$config['size_img_tour'] = array(
+    array(50, 50),
+    array(100, 100),
+    array(200, 200),
+    array(600, 600, 'full')
+);
+
+$config['size_img_slide'] = array(
+    array(100, 40),
+    array(1000, 300)
+);
+

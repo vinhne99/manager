@@ -24,159 +24,19 @@
                         <thead>
                         <tr class="headings">
                             <th>
-                                <input type="checkbox" id="check-all" class="flat">
                             </th>
-                            <th class="column-title">ID </th>
                             <th class="column-title">Hình ảnh </th>
                             <th class="column-title">Tên sản phẩm </th>
                             <th class="column-title">Giá</th>
                             <th class="column-title">Giá(KM)</th>
                             <th class="column-title">Ngày</th>
-                            <th class="column-title no-link last"><span class="nobr">Hành dộng</span>
-                            </th>
-                            <th class="bulk-actions" colspan="7">
-                                <a class="antoo" style="color:#fff; font-weight:500;">Dòng chọn xóa (<span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                            <th width="130px" style="text-align: right" align="right" class="column-title no-link last"><span class="nobr">Hành động</span>
                             </th>
                         </tr>
                         </thead>
+                        <tbody id="table-content">
 
-                        <tbody>
-                        <tr class="even pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">121000040</td>
-                            <td class=" ">May 23, 2014 11:47:56 PM </td>
-                            <td class=" ">121000210 <i class="success fa fa-long-arrow-up"></i></td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$7.45</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
-                        <tr class="odd pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">121000039</td>
-                            <td class=" ">May 23, 2014 11:30:12 PM</td>
-                            <td class=" ">121000208 <i class="success fa fa-long-arrow-up"></i>
-                            </td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$741.20</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
-                        <tr class="even pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">121000038</td>
-                            <td class=" ">May 24, 2014 10:55:33 PM</td>
-                            <td class=" ">121000203 <i class="success fa fa-long-arrow-up"></i>
-                            </td>
-                            <td class=" ">Mike Smith</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$432.26</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
-                        <tr class="odd pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">121000037</td>
-                            <td class=" ">May 24, 2014 10:52:44 PM</td>
-                            <td class=" ">121000204</td>
-                            <td class=" ">Mike Smith</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$333.21</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
-                        <tr class="even pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">121000040</td>
-                            <td class=" ">May 24, 2014 11:47:56 PM </td>
-                            <td class=" ">121000210</td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$7.45</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
-                        <tr class="odd pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">121000039</td>
-                            <td class=" ">May 26, 2014 11:30:12 PM</td>
-                            <td class=" ">121000208 <i class="error fa fa-long-arrow-down"></i>
-                            </td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$741.20</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
-                        <tr class="even pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">121000038</td>
-                            <td class=" ">May 26, 2014 10:55:33 PM</td>
-                            <td class=" ">121000203</td>
-                            <td class=" ">Mike Smith</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$432.26</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
-                        <tr class="odd pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">121000037</td>
-                            <td class=" ">May 26, 2014 10:52:44 PM</td>
-                            <td class=" ">121000204</td>
-                            <td class=" ">Mike Smith</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$333.21</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
-
-                        <tr class="even pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">121000040</td>
-                            <td class=" ">May 27, 2014 11:47:56 PM </td>
-                            <td class=" ">121000210</td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$7.45</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
-                        <tr class="odd pointer">
-                            <td class="a-center ">
-                                <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">121000039</td>
-                            <td class=" ">May 28, 2014 11:30:12 PM</td>
-                            <td class=" ">121000208</td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$741.20</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
                         </tbody>
-
                     </table>
 
             </div>
@@ -186,111 +46,53 @@
 
 <script>
     $(function(){
-        load_tree();
-        $("#add-category").click(function(){
-            edit_category(0);
-        });
+        load_product(<?php if ($this->session->userdata('page')) echo $this->session->userdata('page'); else echo 0; ?>);
+
     });
-    function load_tree(){
-        $( "#sortable ul" ).sortable({
-            connectWith: '#sortable ul',
-            placeholder: 'ui-state-highlight',
-            distance: 5,
-            update: function(event, ui){
-                var newOrder = $(this).sortable('toArray').toString();
-                var _parent = Number(ui.item[0].parentElement.id);
-                var id_item = ui.item[0].id;
 
-                $(".loading1").show();
-                if (!isNaN(_parent))
-                    id_parent = _parent;
+function load_product(page){
+    $.ajax({
+        type: "POST",
+        url:"<?php echo base_url(); ?>admin/product/ajax_product",
+        data: {'page': page },
+        error: function(data){
+            //alert('error test');
+        },
+        success: function(data){
+           $("#table-content").html(data);
+            $('input.flat').iCheck({
+                checkboxClass: 'icheckbox_flat-green',
+                radioClass: 'iradio_flat-green'
+            });
 
-                //$("#result").html("Datos a enviar: order=" + newOrder + "&parent=" + _parent + "&id=" + id_item)
-                $.ajax({
-                    type: "POST",
-                    url:"<?php echo base_url(); ?>admin/category/order_category",
-                    data: 'order=' + newOrder + '&parent=' + id_parent + '&id=' + id_item,
-                    error: function(data){
-                        //alert('error test');
-                    },
-                    success: function(data){
-                        $( ".loading1").hide();
-                    }
-                });
-                //
-            }
-        });
-    }
-    function edit_category(id){
-        var element = $("#change-content");
-        element.find(".modal-content").html("<div class='loading-content'>Đang tải dữ liệu, vui lòng đợi....</div>");
-        element.modal('show');
+
+        }
+    });
+
+}
+
+    function delete_product(id){
+       // $(".pro-" + id).find(".loading-img").show();
         $.ajax({
             type: "POST",
-            url:"<?php echo base_url(); ?>admin/category/edit/" + id,
-            data: {'id': id },
+            url:"<?php echo base_url(); ?>admin/product/delete",
+            data: { 'id' : id  },
+            dataType: 'json',
             error: function(data){
                 //alert('error test');
             },
             success: function(data){
-                element.find(".modal-content").html(data);
-                CKEDITOR.replace( "description");
-
-                $("#save_edit_category").click(function(){
-                    set_disable_form_element(element);
-                    var content = CKEDITOR.instances['description'].getData();
-                    var parent_id = $(".update-category select[name='parent_id']").val();
-                    var title = $(".update-category input[name='title']").val();
-                    if(title == ''){
-                        $(".update-category input[name='title']").css('border', '1px solid red');
-                        return false;
-                    }
-                    $.ajax({
-                        type: "POST",
-                        url:"<?php echo base_url(); ?>admin/category/update_category",
-                        data: {'id': id, 'description': content, 'title': title, 'parent_id': parent_id },
-                        dataType: 'json',
-                        error: function(data){
-                            //alert('error test');
-                        },
-                        success: function(data){
-                            set_enable_form_element(element);
-                            element.modal('hide');
-                            $("#sortable div").html(data['tree']);
-                            load_tree();
-                            new PNotify({
-                                title: 'Thông báo thành công',
-                                text: data['success'],
-                                type: 'success'
-                            });
-                        }
-                    });
-
+                $(".pro-" + id).remove();
+                new PNotify({
+                    title: 'Thông báo thành công',
+                    text: data['success'],
+                    type: 'success'
                 });
-
-            }
-        });
-
-    }
-
-
-    function delete_category(id){
-        var confirmBox = confirm('Bạn có muốn xóa không?');
-        if (!confirmBox) return false;
-        $(".loading1").show();
-        $.ajax({
-            type: "POST",
-            url:"<?php echo base_url(); ?>admin/category/delete_category",
-            data: {'id': id },
-            error: function(data){
-                //alert('error test');
-            },
-            success: function(data){
-                $("#"+id).remove();
-                $( ".loading1").hide();
             }
         });
     }
+
+
 
 
 </script>
