@@ -9,6 +9,7 @@ class Media extends CI_Controller {
 		is_validated();
 		$this->load->model('admin/image_model');
 		$this->load->model('admin/slide_model');
+		$this->load->model('admin/post_model');
 		$this->load->model('simpleimage');
 	}
 
@@ -92,7 +93,7 @@ class Media extends CI_Controller {
 					foreach ($results as $row){
 						$id .= "," . $row->id;
 					}
-					echo $img_id . "-::-" . $upload_path . $filename;
+					echo $img_id . "-::-" . $upload_path ."50/". $filename;
 				}
 			}
 			else
@@ -152,7 +153,7 @@ class Media extends CI_Controller {
 					foreach ($results as $row){
 						$id .= "," . $row->id;
 					}
-					echo $img_id . "-::-" . $upload_path . $filename;
+					echo $img_id . "-::-" . $upload_path ."50/". $filename;
 				}
 			}
 			else
@@ -251,6 +252,27 @@ class Media extends CI_Controller {
 			echo 1;
 			die();
 		}
+	}
+	public function update_default_image(){
+		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+			$parent_id = $this->input->post('parent_id');
+			$img_id = $this->input->post('img_id');
+			$this->image_model->update_parent_id(array( 'default' => 0), $parent_id);
+			$this->image_model->update(array( 'default' => 1), $img_id);
+		}
+	}
+
+	public function getimage($post_id){
+		$data['image'] = $this->image_model->get_image($post_id);
+		$tour = $this->post_model->get_post_by_id($post_id);
+		$data['tour'] = $tour;
+		$this->load->view('admin/media/getimagetour' , $data);
+	}
+	public function getimageproduct($post_id){
+		$data['image'] = $this->image_model->get_image($post_id);
+		$product = $this->post_model->get_post_by_id($post_id);
+		$data['product'] = $product;
+		$this->load->view('admin/media/getimageproduct' , $data);
 	}
 
 }

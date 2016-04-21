@@ -10,6 +10,7 @@ class Image_model extends CI_Model {
         $this->db->select('*');
         $this->db->where('parent_id', $parent_id);
         $this->db->from('image');
+        $this->db->order_by('default', 'DESC');
         $query = $this->db->get();
         if ($query->num_rows() > 0)
             return $query->result();
@@ -34,6 +35,11 @@ class Image_model extends CI_Model {
         $this->db->where('id',$id);
         $this->db->update('image',$data);
     }
+    public function update_parent_id($data, $id){
+        $this->db->where('parent_id',$id);
+        $this->db->update('image',$data);
+    }
+
     public function delete($data, $id){
         $this->db->where('parent_id',$id);
         $this->db->delete('image',$data);

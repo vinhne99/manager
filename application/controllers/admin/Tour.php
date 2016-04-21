@@ -81,6 +81,7 @@ class Tour extends CI_Controller {
 			$short_description = $this->input->post('short_description');
 			$parent_id = $this->input->post('parent_id');
 			$image = $this->input->post('image');
+			$image_default = $this->input->post('image_default');
 
 			$arr_image =  explode(",", $image);
 			unset($arr_image[0]);
@@ -89,11 +90,19 @@ class Tour extends CI_Controller {
 			if ($id == 0){
 				$plug_url = covert_url($title, '');
 				$p_id = $this->post_model->insert(array('title' => $title, 'description' => $description, 'short_description' => $short_description, 'category_id' => $parent_id, 'type' => $this->type , 'plug_url' => $plug_url, 'date_create' => $this->current_date));
-				$this->post_model->insert_option(array('product_id' => $p_id, 'price' => $price , 'price_seo' => $price_seo));
+				$this->post_model->insert_option(array('parent_id' => $p_id, 'price' => $price , 'price_seo' => $price_seo));
 				if (!empty($arr_image)){
 					foreach($arr_image as $row){
 						if ($row != '') {
-							$this->image_model->update(array('parent_id' => $p_id), $row);
+							if ($image_default == ''){
+								$this->image_model->update(array('parent_id' => $p_id, 'default' => 1), $row);
+								$image_default = 'insert';
+							} else {
+								if ($image_default == $row)
+									$this->image_model->update(array('parent_id' => $p_id, 'default' => 1), $row);
+								else
+									$this->image_model->update(array('parent_id' => $p_id), $row);
+							}
 						}
 					}
 				}

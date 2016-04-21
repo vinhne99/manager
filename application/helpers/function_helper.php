@@ -23,13 +23,13 @@ function get_image($path){
 	return base_url(). 'assets/images/no_image.jpg';
 }
 
-function get_image_product($product_id, $size){
+function get_image_product($type = "sanpham",$product_id, $size){
 	$CI =& get_instance();
 	$CI->load->model('admin/image_model');
 	$result = $CI->image_model->get_image($product_id);
 	$path = '';
 	if (!empty($result)){
-		$path = 'uploads/images/sanpham/' . $size . '/'. $result[0]->image_path;
+		$path = 'uploads/images/' . $type .'/' . $size . '/'. $result[0]->image_path;
 	}
 	if (file_exists($path)){
 		return base_url().$path;

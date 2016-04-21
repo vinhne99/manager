@@ -15,7 +15,7 @@ class Post_model extends CI_Model {
         return array();
     }
     public function get_post_type($type, $limit = '', $start = 0){
-        $this->db->select('post.*, option.*, category.title as name_category, post.id as product_id');
+        $this->db->select('post.*, option.*, category.title as name_category, post.id as post_id');
         $this->db->where('type', $type);
         $this->db->from('post');
         $this->db->join('option','post.id = option.parent_id', 'LEFT');

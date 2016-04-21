@@ -23,9 +23,9 @@
                     <table class="table table-striped responsive-utilities jambo_table bulk_action">
                         <thead>
                         <tr class="headings">
-                            <th>
+                            <th width="50px">
                             </th>
-                            <th class="column-title">Hình ảnh </th>
+                            <th  width="50px" class="column-title">Hình ảnh </th>
                             <th class="column-title">Tiêu đề </th>
                             <th class="column-title">Giá</th>
                             <th class="column-title">Giá(KM)</th>
@@ -45,11 +45,25 @@
 </div>
 
 <script>
-    $(function(){
-        load_tour(<?php if ($this->session->userdata('page')) echo $this->session->userdata('page'); else echo 0; ?>);
-
+$(function(){
+    load_tour(<?php if ($this->session->userdata('page')) echo $this->session->userdata('page'); else echo 0; ?>);
+});
+function manager_image(post_id){
+   $("#image-manager").modal("show");
+    $(".content-manager-image").html('Đang tải dữ liệu, đợi chút xíu nhé...');
+    $.ajax({
+        type: "GET",
+        url:"<?php echo base_url(); ?>admin/media/getimage/" + post_id,
+        //data: {'page': page },
+        error: function(data){
+            //alert('error test');
+        },
+        success: function(data){
+            $(".content-manager-image").html(data);
+        }
     });
 
+}
 function load_tour(page){
     $.ajax({
         type: "POST",
@@ -72,6 +86,8 @@ function load_tour(page){
 }
 
     function delete_tour(id){
+        var confirmBox = confirm('Bạn có chắc xóa tour này không vậy?');
+        if (!confirmBox) return false;
        // $(".pro-" + id).find(".loading-img").show();
         $.ajax({
             type: "POST",

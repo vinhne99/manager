@@ -31,7 +31,7 @@ class Product extends CI_Controller {
 			if ($page >= $total){
 				$page = $total;
 			}
-			$this->session->set_userdata("page", $page);
+			$this->session->set_userdata("page_product", $page);
 
 			$start = $page*$limit;
 
@@ -80,7 +80,7 @@ class Product extends CI_Controller {
 			$description = $this->input->post('description');
 			$parent_id = $this->input->post('parent_id');
 			$image = $this->input->post('image');
-
+			$image_default = $this->input->post('image_default');
 			$arr_image =  explode(",", $image);
 			unset($arr_image[0]);
 			$price_seo = $this->input->post('price_seo');
@@ -92,7 +92,15 @@ class Product extends CI_Controller {
 				if (!empty($arr_image)){
 					foreach($arr_image as $row){
 						if ($row != '') {
-							$this->image_model->update(array('parent_id' => $p_id), $row);
+							if ($image_default == ''){
+								$this->image_model->update(array('parent_id' => $p_id, 'default' => 1), $row);
+								$image_default = 'insert';
+							} else {
+								if ($image_default == $row)
+									$this->image_model->update(array('parent_id' => $p_id, 'default' => 1), $row);
+								else
+									$this->image_model->update(array('parent_id' => $p_id), $row);
+							}
 						}
 					}
 				}

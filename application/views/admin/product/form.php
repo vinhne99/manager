@@ -49,12 +49,15 @@
                         <div class="img-show img-<?php echo $img->id; ?>">
                             <div class="loading-img"></div>
                             <span><a onclick="delete_img(<?php echo $img->id; ?>)" class="delete" title="Xóa hình" href="javascript:;"><i class="fa fa-remove"></i></a></span>
-                            <img src="<?php echo base_url();  ?>uploads/images/sanpham/<?php echo $img->image_path; ?>">
+                            <img src="<?php echo base_url();  ?>uploads/images/sanpham/50/<?php echo $img->image_path; ?>">
+                            <div class="image-default <?php if ($img->default == 1) echo 'active';  ?>" onclick="image_default(<?php echo $img->id; ?>);"></div>
                         </div>
-                <?php endforeach;
+                    <?php endforeach;
                 endif;
                 ?>
-                <div class="clearfix"></div></div>
+                <div class="clearfix"></div>
+                <input type="hidden" name="image_default"   />
+            </div>
             <div class="clearfix"></div>
             <button id="upload" type="button" class="btn btn-info">Thêm hình ảnh</button>  <span class="load-upload"></span>
         </div>
@@ -68,6 +71,28 @@
     CKEDITOR.replace( 'description');
 </script>
 <script >
+
+    function image_default(img_id){
+        $(".img-show" ).find("div.image-default").removeClass("active");
+        $(".img-" + img_id).find("div.image-default").addClass("active");
+        $("input[name='image_default']").val(img_id);
+        <?php if (isset($product)) : ?>
+        $.ajax({
+            type: "POST",
+            url:"<?php echo base_url(); ?>admin/media/update_default_image",
+            data: { 'img_id' : img_id , 'parent_id' : <?php echo $product->id; ?>},
+            dataType: 'html',
+            error: function(data){
+                //alert('error test');
+            },
+            success: function(data){
+
+            }
+        });
+        <?php endif; ?>
+
+    }
+
     $(function(){
         var btnUpload=$('#upload');
         new AjaxUpload(btnUpload, {
@@ -94,8 +119,7 @@
                     alert('error');
                 } else{
                     $("#image").append(","+data[0]);
-                    $("#image-show").prepend('<div  class="img-show img-' + data[0]+ '"> <div class="loading-img"></div><span><a onclick="delete_img(' + data[0]+ ')" class="delete" title="Xóa hình" href="javascript:;"><i class="fa fa-remove"></i></a></span><img src="<?php echo base_url(); ?>' + data[1] +'" /></span>');
-
+                    $("#image-show").prepend('<div  class="img-show img-' + data[0]+ '"> <div class="loading-img"></div><span><a onclick="delete_img(' + data[0]+ ')" class="delete" title="Xóa hình" href="javascript:;"><i class="fa fa-remove"></i></a></span><img src="<?php echo base_url(); ?>' + data[1] +'" /><div class="image-default" onclick="image_default(' + data[0]+ ');"></div></span>');
                 }
 
             }
@@ -111,6 +135,7 @@
             var price =  element.find(" input[name='price']").val();
             var price_seo =  element.find(" input[name='price_seo']").val();
             var image =  element.find("#image").html();
+            var image_default = $("input[name='image_default']").val();
             if(title == ''){
                 element.find("input[name='title']").css('border', '1px solid red').focus();;
                 return false;
@@ -128,7 +153,8 @@
                     'parent_id': parent_id,
                     'image': image,
                     'price': price,
-                    'price_seo': price_seo
+                    'price_seo': price_seo,
+                    'image_default': image_default
                 },
                 dataType: 'json',
                 error: function(data){
@@ -143,6 +169,7 @@
                             $("#image").html('');
                             $("#image-show").html('');
                             element.find("select[name='parent_id']").val('');
+                             $("input[name='image_default']").val('');
                             element.find(" input[type='text']").val('');
                             CKEDITOR.instances['description'].setData('');
                         <?php

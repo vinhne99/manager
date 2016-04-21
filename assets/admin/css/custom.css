@@ -6466,6 +6466,7 @@ ul.notifications {
     background: rgba(91, 192, 222, 0.88);
     border-radius: 50%;
     padding: 0px 4px;
+    z-index: 99;
 }
 .img-show span:hover{
     background: rgb(27, 157, 195);
@@ -6569,4 +6570,23 @@ a.edit{
 }
 .tree-menu-slide {
     min-height: 200px;
+}
+div.image-default {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.image-default.active{
+    background-image: url("../images/check.png") ;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 53%;
+    background-color: rgba(255, 255, 255, 0.51);
+}
+.img-g{
+    cursor: pointer;
 }

@@ -46,7 +46,7 @@
 
 <script>
     $(function(){
-        load_product(<?php if ($this->session->userdata('page')) echo $this->session->userdata('page'); else echo 0; ?>);
+        load_product(<?php if ($this->session->userdata('page_product')) echo $this->session->userdata('page_product'); else echo 0; ?>);
 
     });
 
@@ -72,6 +72,8 @@ function load_product(page){
 }
 
     function delete_product(id){
+        var confirmBox = confirm('Bạn có chắc xóa sản phẩm này không vậy?');
+        if (!confirmBox) return false;
        // $(".pro-" + id).find(".loading-img").show();
         $.ajax({
             type: "POST",
@@ -91,7 +93,22 @@ function load_product(page){
             }
         });
     }
+    function manager_image(post_id){
+        $("#image-manager").modal("show");
+        $(".content-manager-image").html('Đang tải dữ liệu, đợi chút xíu nhé...');
+        $.ajax({
+            type: "GET",
+            url:"<?php echo base_url(); ?>admin/media/getimageproduct/" + post_id,
+            //data: {'page': page },
+            error: function(data){
+                //alert('error test');
+            },
+            success: function(data){
+                $(".content-manager-image").html(data);
+            }
+        });
 
+    }
 
 
 

@@ -35,14 +35,14 @@
         <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Giá:
         </label>
         <div class="col-md-10 col-sm-10 col-xs-12">
-            <input type="text" value="<?php if (isset($option)) echo $option->price;  ?>" name="price" required="required" class="form-control col-md-7 col-xs-12" >
+            <input type="text" value="<?php if (!empty($option) && isset($option)) echo $option->price;  ?>" name="price" required="required" class="form-control col-md-7 col-xs-12" >
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Giá khuyến mãi:
         </label>
         <div class="col-md-10 col-sm-10 col-xs-12">
-            <input type="text" value="<?php if (isset($option)) echo $option->price_seo;  ?>" name="price_seo" required="required" class="form-control col-md-7 col-xs-12" >
+            <input type="text" value="<?php if (!empty($option)  && isset($option)) echo $option->price_seo;  ?>" name="price_seo" required="required" class="form-control col-md-7 col-xs-12" >
         </div>
     </div>
     <div class="form-group">
@@ -56,12 +56,15 @@
                         <div class="img-show img-<?php echo $img->id; ?>">
                             <div class="loading-img"></div>
                             <span><a onclick="delete_img(<?php echo $img->id; ?>)" class="delete" title="Xóa hình" href="javascript:;"><i class="fa fa-remove"></i></a></span>
-                            <img src="<?php echo base_url();  ?>uploads/images/sanpham/<?php echo $img->image_path; ?>">
+                            <img src="<?php echo base_url();  ?>uploads/images/tour/<?php echo $img->image_path; ?>">
+                            <div class="image-default <?php if ($img->default == 1) echo 'active';  ?>" onclick="image_default(<?php echo $img->id; ?>);"></div>
                         </div>
                 <?php endforeach;
                 endif;
                 ?>
-                <div class="clearfix"></div></div>
+                <div class="clearfix"></div>
+                <input type="hidden" name="image_default"   />
+            </div>
             <div class="clearfix"></div>
             <button id="upload" type="button" class="btn btn-info">Thêm hình ảnh</button>  <span class="load-upload"></span>
         </div>
@@ -81,6 +84,26 @@
         });
 </script>
 <script >
+    function image_default(img_id){
+        $(".img-show" ).find("div.image-default").removeClass("active");
+        $(".img-" + img_id).find("div.image-default").addClass("active");
+        $("input[name='image_default']").val(img_id);
+        <?php if (isset($tour)) : ?>
+            $.ajax({
+                type: "POST",
+                url:"<?php echo base_url(); ?>admin/media/update_default_image",
+                data: { 'img_id' : img_id , 'parent_id' : <?php echo $tour->id; ?>},
+                dataType: 'html',
+                error: function(data){
+                    //alert('error test');
+                },
+                success: function(data){
+
+                }
+            });
+        <?php endif; ?>
+
+    }
     $(function(){
         var btnUpload=$('#upload');
         new AjaxUpload(btnUpload, {
@@ -94,20 +117,20 @@
                     return false;
                 }
                 $(".load-upload").html('Đang tải hình ảnh...');
-                set_disable_form_element($(".form-product"));
+                set_disable_form_element($(".form-tour"));
             },
             onComplete: function(file, response){
                 //On completion clear the status
                 //Add uploaded file to list
                 var data = response.split('-::-');
                 $(".load-upload").html('');
-                set_enable_form_element($(".form-product"));
+                set_enable_form_element($(".form-tour"));
                 if(data==="error"){
                     //error return
                     alert('error');
                 } else{
                     $("#image").append(","+data[0]);
-                    $("#image-show").prepend('<div  class="img-show img-' + data[0]+ '"> <div class="loading-img"></div><span><a onclick="delete_img(' + data[0]+ ')" class="delete" title="Xóa hình" href="javascript:;"><i class="fa fa-remove"></i></a></span><img src="<?php echo base_url(); ?>' + data[1] +'" /></span>');
+                    $("#image-show").prepend('<div  class="img-show img-' + data[0]+ '"> <div class="loading-img"></div><span><a onclick="delete_img(' + data[0]+ ')" class="delete" title="Xóa hình" href="javascript:;"><i class="fa fa-remove"></i></a></span><img src="<?php echo base_url(); ?>' + data[1] +'" /><div class="image-default" onclick="image_default(' + data[0]+ ');"></div></div>');
 
                 }
 
@@ -125,6 +148,7 @@
             var price =  element.find(" input[name='price']").val();
             var price_seo =  element.find(" input[name='price_seo']").val();
             var image =  element.find("#image").html();
+            var image_default = $("input[name='image_default']").val();
             if(title == ''){
                 element.find("input[name='title']").css('border', '1px solid red').focus();;
                 return false;
@@ -144,7 +168,8 @@
                     'parent_id': parent_id,
                     'image': image,
                     'price': price,
-                    'price_seo': price_seo
+                    'price_seo': price_seo,
+                    'image_default': image_default
                 },
                 dataType: 'json',
                 error: function(data){
@@ -160,6 +185,7 @@
                             $("#image-show").html('');
                             element.find("select[name='parent_id']").val('');
                             element.find(" input[type='text']").val('');
+                             $("input[name='image_default']").val('');
                             CKEDITOR.instances['description'].setData('');
                             CKEDITOR.instances['short_description'].setData('');
                         <?php
