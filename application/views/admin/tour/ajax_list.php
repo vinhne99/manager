@@ -1,5 +1,5 @@
 <?php
-$size_img = $this->config->item('size_img_product');
+$size_img = $this->config->item('size_img_tour');
 foreach ($tours as $tour): ?>
     <tr class="even pointer pro-<?php echo $tour->post_id; ?>">
         <td class="a-center ">

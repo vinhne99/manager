@@ -22,14 +22,19 @@
             <div class="x_content">
                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
                     <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                        <?php foreach ($cms as $row): ?>
-                            <li role="presentation" <?php if ($row->id == 1) echo 'class="active"';  ?> ><a href="#tab_content<?php echo $row->id; ?>" id="tab-<?php echo $row->id; ?>" role="tab" data-toggle="tab" aria-expanded="true"><?php echo $row->title; ?></a>
+                        <?php
+                        $temp = true;
+                        foreach ($cms as $row): ?>
+                            <li role="presentation" <?php if ($temp) { echo 'class="active"'; $temp = false; }  ?> ><a href="#tab_content<?php echo $row->id; ?>" id="tab-<?php echo $row->id; ?>" role="tab" data-toggle="tab" aria-expanded="true"><?php echo $row->title; ?></a>
                             </li>
                         <?php endforeach; ?>
                     </ul>
                     <div id="myTabContent" class="tab-content">
-                        <?php foreach ($cms as $row): ?>
-                            <div role="tabpanel" class="tab-pane fade <?php if ($row->id == 1) echo 'active in';  ?> " id="tab_content<?php echo $row->id; ?>" aria-labelledby="tab-<?php echo $row->id; ?>">
+                        <div class="load"></div>
+                        <?php
+                        $temp = true;
+                        foreach ($cms as $row): ?>
+                            <div role="tabpanel" class="tab-pane fade <?php if ($temp) { echo 'active in';  $temp = false;}  ?> " id="tab_content<?php echo $row->id; ?>" aria-labelledby="tab-<?php echo $row->id; ?>">
                                 <textarea id="description<?php echo $row->id; ?>"><?php  if (isset($row))  echo $row->description;  ?></textarea>
                                 <script>  CKEDITOR.replace( 'description<?php echo $row->id; ?>');</script>
                                 <br/>
@@ -47,6 +52,7 @@
 
 <script>
     function save_cms(id){
+        $(".load").show();
         var description = CKEDITOR.instances['description'+id].getData();
         var title = $("#tab-" + id).html();
         $.ajax({
@@ -58,6 +64,7 @@
                 //alert('error test');
             },
             success: function(data){
+                $(".load").hide();
                 new PNotify({
                     title: 'Thông báo thành công',
                     text: "Cập nhật " + title + " thành công!",

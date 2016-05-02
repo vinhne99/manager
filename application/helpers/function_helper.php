@@ -37,6 +37,14 @@ function get_image_product($type = "sanpham",$product_id, $size){
 	return base_url(). 'assets/images/no_image.jpg';
 }
 
+function get_post($post_id){
+	$CI =& get_instance();
+	$CI->load->model('admin/post_model');
+	return $CI->post_model->get_post_by_id($post_id);
+
+}
+
+
 function get_image_slide($id, $size){
 	$CI =& get_instance();
 	$CI->load->model('admin/slide_model');
@@ -51,6 +59,11 @@ function get_image_slide($id, $size){
 	return base_url(). 'assets/images/no_image.jpg';
 }
 
+function get_custormer($id){
+	$CI =& get_instance();
+	$CI->load->model('admin/customer_model');
+	return $CI->customer_model->get_customer($id);
+}
 
 function covert_url($inputString, $id = '')
 {
