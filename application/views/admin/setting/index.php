@@ -56,7 +56,13 @@
                             <input type="text" value="<?php echo setting_value("email");  ?>" name="email"  required="required" class="form-control col-md-7 col-xs-12" data-parsley-id="3668">
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">Địa chỉ: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-10 col-sm-10 col-xs-12">
+                            <input type="text" value="<?php echo setting_value("address");  ?>" name="address"  required="required" class="form-control col-md-7 col-xs-12" data-parsley-id="3668">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">Điện thoại: <span class="required">*</span>
                         </label>
@@ -72,7 +78,20 @@
                             <input  value="<?php echo setting_value("hotline");  ?>"  type="text" name="hotline"  required="required" class="form-control col-md-7 col-xs-12" data-parsley-id="3668">
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">Link page facebook: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-10 col-sm-10 col-xs-12">
+                            <input  value="<?php echo setting_value("link_facebook");  ?>"  type="text" name="link_facebook"   class="form-control col-md-7 col-xs-12" data-parsley-id="3668">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">Link page google: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-10 col-sm-10 col-xs-12">
+                            <input  value="<?php echo setting_value("link_google");  ?>"  type="text" name="link_google" class="form-control col-md-7 col-xs-12" data-parsley-id="3668">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">Liên hệ: <span class="required">*</span>
                         </label>

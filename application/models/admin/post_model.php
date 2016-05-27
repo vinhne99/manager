@@ -14,9 +14,28 @@ class Post_model extends CI_Model {
             return $query->row();
         return array();
     }
+    public function get_post_type1($type, $limit = '', $start = 0){
+        $this->db->select('post.*, category.title as name_category, post.id as post_id');
+        $this->db->where('type', $type);
+        $this->db->from('post');
+        $this->db->join('category','post.category_id = category.id', 'LEFT');
+        $this->db->order_by('post.date_create', 'DESC');
+        if ($limit != '')
+            $this->db->limit($limit, $start);
+
+        $query = $this->db->get();
+
+        if ($limit == '')
+            return $query->num_rows();
+
+        if ($query->num_rows() > 0)
+            return $query->result();
+        return array();
+    }
+
     public function get_post_type($type, $limit = '', $start = 0){
         $this->db->select('post.*, option.*, category.title as name_category, post.id as post_id');
-        $this->db->where('type', $type);
+        $this->db->where('post.type', $type);
         $this->db->from('post');
         $this->db->join('option','post.id = option.parent_id', 'LEFT');
         $this->db->join('category','post.category_id = category.id', 'LEFT');

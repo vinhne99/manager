@@ -54,3 +54,6 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['admin'] = 'admin/dashboard/login';
+
+$route['bang-gia'] = 'home/banggia';
+$route['lien-he'] = 'home/contact';

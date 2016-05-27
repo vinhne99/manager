@@ -16,9 +16,9 @@ class Setting extends CI_Controller {
 			foreach ($this->input->post() as $key => $val){
 				$result = $this->setting_model->get_setting($key);
 				if (!empty($result))
-					$this->setting_model->update(array('content' => $val , 'date_update' => $this->config->item('current_datetime')), $key);
+					$this->setting_model->update(array('content' => $val , 'date_update' => date_now()), $key);
 				else
-					$this->setting_model->insert(array('key' => $key, 'content' => $val ,  'date_update' => $this->config->item('current_datetime')));
+					$this->setting_model->insert(array('key' => $key, 'content' => $val ,  'date_update' =>date_now()));
 			}
 
 		}

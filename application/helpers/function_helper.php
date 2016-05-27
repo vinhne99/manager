@@ -23,13 +23,24 @@ function get_image($path){
 	return base_url(). 'assets/images/no_image.jpg';
 }
 
-function get_image_product($type = "sanpham",$product_id, $size){
+function get_image_post_by_id($size, $path){
+	if (file_exists("uploads/images/sanpham/".$size."/".$path)){
+		return base_url()."uploads/images/sanpham/".$size."/".$path;
+	}
+	return base_url(). 'assets/images/no_image.jpg';
+}
+
+
+function get_image_product($type = "sanpham",$product_id, $size = NULL){
 	$CI =& get_instance();
 	$CI->load->model('admin/image_model');
 	$result = $CI->image_model->get_image($product_id);
 	$path = '';
 	if (!empty($result)){
 		$path = 'uploads/images/' . $type .'/' . $size . '/'. $result[0]->image_path;
+	}
+	if ($size == NULL ){
+		$path = 'uploads/images/' . $type .'/'. $result[0]->image_path;
 	}
 	if (file_exists($path)){
 		return base_url().$path;
@@ -59,12 +70,43 @@ function get_image_slide($id, $size){
 	return base_url(). 'assets/images/no_image.jpg';
 }
 
+function get_slide(){
+	$CI =& get_instance();
+	$CI->load->model('admin/slide_model');
+	return $CI->slide_model->get_slide();
+}
+
 function get_custormer($id){
 	$CI =& get_instance();
 	$CI->load->model('admin/customer_model');
 	return $CI->customer_model->get_customer($id);
 }
-
+function sub_str($str, $k){
+	$arr = explode(" ", $str);
+	$str_t = '';
+	for ($i = 0; $i < count($arr); $i++){
+		if ($i == ($k-1))
+			$str_t .= $arr[$i] . "<br/>";
+		else
+			$str_t .= $arr[$i]  . " ";
+	}
+	return $str_t;
+}
+function sub_str_description($get_the_content , $lenght = 10){
+	$author_desc = strip_tags(nl2br($get_the_content));
+	$arr = explode(' ', strip_tags($author_desc));
+	$str = '';
+	$i = 0;
+	if(count($arr) <= $lenght){
+		return $get_the_content;
+	}
+	foreach($arr as $row){
+		$str .= $row . " ";
+		$i++;
+		if($i == $lenght) break;
+	}
+	return $str . " ...";
+}
 function covert_url($inputString, $id = '')
 {
 	$trans = array (
@@ -119,4 +161,9 @@ function covert_url($inputString, $id = '')
 		return $string;
 
 	return $string . "-" . $id;
+}
+
+
+function date_now(){
+	return date("Y-m-d H:i:s");
 }

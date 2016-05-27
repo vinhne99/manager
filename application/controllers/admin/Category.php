@@ -5,14 +5,14 @@ class Category extends CI_Controller {
 	private $tree_ul = '';
 	private $tree_select = '';
 	private $serent = 0;
-
+	private $type = "0";
 	private  $current_date = '';
 	function __construct()
 	{
 		parent::__construct();
 		is_validated();
 		$this->load->model('admin/category_model');
-		$this->current_date = $this->config->item('current_datetime');
+		$this->current_date = date_now();
 	}
 
 	public function index()
@@ -56,41 +56,43 @@ class Category extends CI_Controller {
 
 		echo json_encode($data);
 	}
+	public function dequymenu($parent_id){
+		$data = $this->category_model->get_category($parent_id, $this->type);
+		$this->tree_ul .= '<ul id="' . $parent_id . '">';
+		if (!empty($data)) {
+			foreach ($data as $row) {
+				$this->tree_ul .= '<li id="' . $row->id . '"><span class="title-category"><strong>' . $row->title. '</strong><span class="action"><a onclick="edit_category(' . $row->id . ');" href="javascript:;" title="Sửa" ><i class="fa fa-edit"></i></a> <a onclick="delete_category(' . $row->id . ');" href="javascript:;" title="Xóa" ><i class="fa fa-remove"></i></a></span></span>';
+				$this->dequymenu($row->id);
+				$this->tree_ul .= '</li>';
+			}
+		}
+		$this->tree_ul .= '</ul>';
+	}
 	public function update_category(){
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
 			$id = $this->input->post('id');
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
 			$parent_id = $this->input->post('parent_id');
+			$image = $this->input->post('image');
 			if ($id == 0){
 				$plug_url = covert_url($title, '');
-				$this->category_model->insert(array('title' => $title, 'description' => $description, 'parent_id' => $parent_id, 'order' => 9999, 'plug_url' => $plug_url, 'date_create' => $this->current_date));
+				$this->category_model->insert(array('title' => $title,'type' => $this->type, 'description' => $description,'image' => $image, 'parent_id' => $parent_id, 'order' => 9999, 'plug_url' => $plug_url, 'date_create' => $this->current_date));
 				$this->dequymenu(0);
 				echo json_encode(array('status' => 1, 'success' => 'Thêm danh mục ' . $title . ' thành công!', 'tree' => $this->tree_ul));
 			} else {
 				$plug_url = covert_url($title, $id);
-				$this->category_model->update(array('title' => $title, 'description' => $description, 'parent_id' => $parent_id, 'plug_url' => $plug_url , 'date_update' => $this->current_date), $id);
+				$this->category_model->update(array('title' => $title, 'description' => $description, 'image' => $image,  'parent_id' => $parent_id, 'plug_url' => $plug_url , 'date_update' => $this->current_date), $id);
 				$this->dequymenu(0);
 				echo json_encode(array('status' => 1, 'success' => 'Cập nhật danh mục ' . $title . ' thành công!', 'tree' => $this->tree_ul));
 			}
 		}
 	}
-	public function dequymenu($parent_id){
-		$data = $this->category_model->get_category($parent_id);
-		$this->tree_ul .= '<ul id="' . $parent_id . '">';
-		if (!empty($data)) {
-			foreach ($data as $row) {
-					$this->tree_ul .= '<li id="' . $row->id . '"><span class="title-category"><strong>' . $row->title. '</strong><span class="action"><a onclick="edit_category(' . $row->id . ');" href="javascript:;" title="Sửa" ><i class="fa fa-edit"></i></a> <a onclick="delete_category(' . $row->id . ');" href="javascript:;" title="Xóa" ><i class="fa fa-remove"></i></a></span></span>';
-					$this->dequymenu($row->id);
-					$this->tree_ul .= '</li>';
-			}
-		}
-		$this->tree_ul .= '</ul>';
-	}
+
 
 	public function dequyselect($parent_id, $curent_id, $id){
 		$this->serent++;
-		$data = $this->category_model->get_category($parent_id);
+		$data = $this->category_model->get_category($parent_id, $this->type);
 		if (!empty($data)) {
 			foreach ($data as $row) {
 				$selected = '';

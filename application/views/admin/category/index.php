@@ -84,6 +84,8 @@
         if (id == 0){
             $(".title-cg").html("Thêm danh mục");
             $("#save_edit_category").html("Thêm mới");
+            $("#logo").val('');
+            $('#thumb-logo').attr('src', '<?php echo base_url(); ?>' + "assets/images/no_image.jpg" );
         } else {
             $(".title-cg").html("Cập nhật danh mục");
             $("#save_edit_category").html("Cập nhật");
@@ -105,7 +107,14 @@
                 $(".update-category input[name='title']").val(data['category'].title);
                 CKEDITOR.instances['description'].setData(data['category'].description);
                 $(".update-category select[name='parent_id']").html('<option value="">--Chọn danh mục--</option>' + data['tree']);
-
+                if (id != 0) {
+                    if (data['category'].image != null && data['category'].image != '' ) {
+                        $('#thumb-logo').attr('src', '<?php echo base_url(); ?>' + data['category'].image);
+                        $("#logo").val(data['category'].image);
+                    }
+                    else
+                        $('#thumb-logo').attr('src', '<?php echo base_url(); ?>' + "assets/images/no_image.jpg");
+                }
             }
         });
 
@@ -116,6 +125,7 @@
         var content = CKEDITOR.instances['description'].getData();
         var parent_id = $(".update-category select[name='parent_id']").val();
         var title = $(".update-category input[name='title']").val();
+        var image = $(".update-category input[name='logo']").val();
         var id = $(".update-category input[name='id']").val();
         if(title == ''){
             $(".update-category input[name='title']").css('border', '1px solid red');
@@ -125,7 +135,7 @@
         $.ajax({
             type: "POST",
             url:"<?php echo base_url(); ?>admin/category/update_category",
-            data: {'id': id, 'description': content, 'title': title, 'parent_id': parent_id },
+            data: {'id': id, 'description': content, 'title': title, 'parent_id': parent_id, 'image': image },
             dataType: 'json',
             error: function(data){
                 //alert('error test');
@@ -170,10 +180,9 @@
 
 <script >
     $(function(){
-/*
         var btnUpload=$('#upload');
         new AjaxUpload(btnUpload, {
-            action: '<?php echo base_url();	?>admin/media/upload',
+            action: '<?php echo base_url();	?>admin/media/upload_category',
             name: 'uploadfile',
             data: {},
             onSubmit: function(file, ext){
@@ -194,11 +203,9 @@
                 } else{
                     $("#logo").val(response);
                     $('#thumb-logo').attr('src', '<?php echo base_url(); ?>' + response );
-
                 }
 
             }
         });
-*/
     });
 </script>

@@ -8,7 +8,7 @@ class Slide extends CI_Controller {
 		parent::__construct();
 		is_validated();
 		$this->load->model('admin/slide_model');
-		$this->current_date = $this->config->item('current_datetime');
+		$this->current_date = date_now();
 	}
 
 	public function index()

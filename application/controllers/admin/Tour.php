@@ -13,7 +13,7 @@ class Tour extends CI_Controller {
 		$this->load->model('admin/category_model');
 		$this->load->model('admin/post_model');
 		$this->load->model('admin/image_model');
-		$this->current_date = $this->config->item('current_datetime');
+		$this->current_date = date_now();
 	}
 	public function index()
 	{

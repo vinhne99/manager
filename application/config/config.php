@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://local.studio/';
+$config['base_url'] = 'http://congnghebachkim.com/';
 
 /*
 |--------------------------------------------------------------------------
@@ -516,13 +516,16 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
-$initDate = new DateTime();
-$initDate->add(new DateInterval("PT5H"));
-$config['current_datetime'] =$initDate->format("Y-m-d H:i:s");
+//$initDate = new DateTime();
+//$initDate->add(new DateInterval("PT5H"));
+$config['current_datetime'] = date("Y-m-d H:i:s");
+$config['size_img_post'] = array(
+    array(50, 50),
+    array('', '')
+);
 $config['size_img_product'] = array(
     array(50, 50),
-    array(100, 100),
-    array(200, 200),
+    array(330, 290),
     array(600, 600, 'full')
 );
 $config['size_img_tour'] = array(
@@ -534,6 +537,6 @@ $config['size_img_tour'] = array(
 
 $config['size_img_slide'] = array(
     array(100, 40),
-    array(1000, 300)
+    array(1092, 379)
 );
 

@@ -6,11 +6,14 @@ class Category_model extends CI_Model {
         parent::__construct();
     }
 
-    public function get_category($parent_id){
+    public function get_category($parent_id, $type = ''){
         $this->db->select('*');
         $this->db->where('parent_id', $parent_id);
         $this->db->from('category');
         $this->db->where("delete", 0);
+        if ($type != '')
+        $this->db->where("type", $type);
+
         $this->db->order_by('order','ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0)
